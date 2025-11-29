@@ -38,8 +38,9 @@ def date() -> None:
 
 def wishme() -> None:
     """Greets the user based on the time of day."""
-    speak("Welcome back, sir!")
-    print("Welcome back, sir!")
+    speak("Welcome back, Aishwarya!")
+    print("Welcome back, Aishwarya!")
+
 
     hour = datetime.datetime.now().hour
     if 4 <= hour < 12:
@@ -197,5 +198,5 @@ if __name__ == "__main__":
             break
             
         elif "offline" in query or "exit" in query:
-            speak("Going offline. Have a good day!")
+            speak("Going offlinecAishwarya..!. Have a good day !")
             break
