@@ -9,10 +9,12 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Code from GitHub via SSH') {
+        stage('Checkout') {
             steps {
-                git branch: 'main', url: 'git@github.com:AishwaryaPawar149/Jarvis-Desktop-Voice-Assistant.git' 
+                git branch: 'main', url: 'git@github.com:AishwaryaPawar149/Jarvis-Desktop-Voice-Assistant.git', credentialsId: 'pull-key'
             }
+}
+
         }
 
         stage('Pull latest changes to EC2') {
