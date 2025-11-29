@@ -1,28 +1,31 @@
 pipeline {
+
     agent any
 
     environment {
-        EC2_USER = 'ubuntu'
-        EC2_HOST = '13.126.10.149'
-        SSH_CRED_ID = 'terraform-ssh-creds'  // Jenkins SSH Credential ID
-        APP_DIR = '/home/ubuntu/Jarvis-Desktop-Voice-Assistant'
+        SERVER_IP = "43.205.92.192"
+        SSH_CRED_ID = "pull-key"
+        APP_PATH = "/home/ubuntu/Jarvis-Desktop-Voice-Assistant"
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'git@github.com:AishwaryaPawar149/Jarvis-Desktop-Voice-Assistant.git', credentialsId: 'pull-key'
-            }
-}
 
+        stage('Checkout Code from GitHub via SSH') {
+            steps {
+                git branch: 'main', 
+                url: 'git@github.com:AishwaryaPawar149/Jarvis-Desktop-Voice-Assistant.git', 
+                credentialsId: 'pull-key'
+            }
         }
 
         stage('Pull latest changes to EC2') {
             steps {
                 sshagent([SSH_CRED_ID]) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} \
-                    'cd ${APP_DIR} && git pull origin main'
+                    ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} '
+                        cd ${APP_PATH} &&
+                        git pull origin main
+                    '
                     """
                 }
             }
@@ -32,8 +35,10 @@ pipeline {
             steps {
                 sshagent([SSH_CRED_ID]) {
                     sh """
-                    ssh ${EC2_USER}@${EC2_HOST} \
-                    'cd ${APP_DIR} && pip3 install -r requirements.txt --user'
+                    ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} '
+                        cd ${APP_PATH} &&
+                        pip install -r requirements.txt
+                    '
                     """
                 }
             }
@@ -43,8 +48,9 @@ pipeline {
             steps {
                 sshagent([SSH_CRED_ID]) {
                     sh """
-                    ssh ${EC2_USER}@${EC2_HOST} \
-                    'sudo systemctl restart jarvis'
+                    ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} '
+                        sudo systemctl restart jarvis.service
+                    '
                     """
                 }
             }
@@ -54,8 +60,9 @@ pipeline {
             steps {
                 sshagent([SSH_CRED_ID]) {
                     sh """
-                    ssh ${EC2_USER}@${EC2_HOST} \
-                    'sudo systemctl status jarvis | tail -n 10'
+                    ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} '
+                        systemctl status jarvis.service
+                    '
                     """
                 }
             }
@@ -64,7 +71,7 @@ pipeline {
 
     post {
         success {
-            echo "🚀 Jarvis successfully deployed on EC2!"
+            echo "🎉 SUCCESS: Jarvis Deployed Successfully via Jenkins!"
         }
         failure {
             echo "❌ Deployment failed! Check logs."
