@@ -11,33 +11,25 @@ pipeline {
     stages {
         stage('Pull latest code') {
             steps {
-                sshagent(['terraform-ssh-creds']) {  // Jenkins stored SSH credential ID
-                    sh "ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ${EC2_USER}@${EC2_HOST} 'cd ${APP_DIR} && git pull origin main'"
-                }
+                sh "ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ${EC2_USER}@${EC2_HOST} 'cd ${APP_DIR} && git pull origin main'"
             }
         }
 
         stage('Install dependencies') {
             steps {
-                sshagent(['terraform-ssh-creds']) {
-                    sh "ssh -i ${SSH_KEY} ${EC2_USER}@${EC2_HOST} 'cd ${APP_DIR} && pip3 install -r requirements.txt --user'"
-                }
+                sh "ssh -i ${SSH_KEY} ${EC2_USER}@${EC2_HOST} 'cd ${APP_DIR} && pip3 install -r requirements.txt --user'"
             }
         }
 
         stage('Restart Jarvis service') {
             steps {
-                sshagent(['terraform-ssh-creds']) {
-                    sh "ssh -i ${SSH_KEY} ${EC2_USER}@${EC2_HOST} 'sudo systemctl restart jarvis'"
-                }
+                sh "ssh -i ${SSH_KEY} ${EC2_USER}@${EC2_HOST} 'sudo systemctl restart jarvis'"
             }
         }
 
         stage('Verify service') {
             steps {
-                sshagent(['terraform-ssh-creds']) {
-                    sh "ssh -i ${SSH_KEY} ${EC2_USER}@${EC2_HOST} 'sudo systemctl status jarvis | tail -n 10'"
-                }
+                sh "ssh -i ${SSH_KEY} ${EC2_USER}@${EC2_HOST} 'sudo systemctl status jarvis | tail -n 10'"
             }
         }
     }
