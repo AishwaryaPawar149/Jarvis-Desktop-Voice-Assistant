@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     environment {
-        SERVER_IP = "43.205.92.192"
+        SERVER_IP = "13.233.244.195"
         SSH_CRED_ID = "pull-key"
         APP_PATH = "/home/ubuntu/Jarvis-Desktop-Voice-Assistant"
     }
