@@ -1,100 +1,332 @@
-# Jarvis Desktop Voice Assistant🔥
+# 🤖 Jarvis Desktop Voice Assistant
 
-<img src="https://giffiles.alphacoders.com/212/212508.gif" alt="">
+A Python-based desktop voice assistant inspired by Iron Man's JARVIS. This intelligent assistant can perform various tasks through voice commands including web searches, opening applications, playing music, and much more.
 
-**Have you ever wondered how cool it would be to have your own assistant? Imagine how easier it would be doing Wikipedia searches without opening web browsers, and performing many other daily tasks like playing music with the help of a single voice command, opening different browsers in just a voice command.**
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![Status](https://img.shields.io/badge/Status-Active-success.svg)
 
-**This project is simple desktop voice assistant built with python named as “Jarvis Desktop Voice Assistant”. This project is fully completed and error free. It was compiled in VS Code Editor.**
+---
 
-**🔸 Let's be honest, it's not as intelligent as in the movie, but it can do a lot of cool things and automate your daily tasks you do on your personal computers/laptops.**
+##  Table of Contents
 
-## 📌Built with
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Deployment](#deployment)
+- [Usage](#usage)
+- [Voice Commands](#voice-commands)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
+- [License](#license)
 
-<code><img height="30" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/python/python.png"></code>
+---
 
-## 📌Features
+##  Features
 
-It can do a lot of cool things, some of them being:
+-  **Voice Recognition** - Natural speech-to-text conversion
+-  **Text-to-Speech** - Human-like voice responses
+-  **Web Search** - Google, YouTube, Wikipedia searches
+-  **App Control** - Open applications via voice
+-  **Media Playback** - Play music and videos
+-  **Time & Date** - Get current time and date information
+-  **Weather Updates** - Real-time weather information
+-  **System Control** - Shutdown, restart, sleep commands
 
-- Greet user
-- Tell current time and date
-- Launch applications/softwares
-- Open any website
-- Tells about any person (via Wikipedia)
-- Can search anything on Google
-- Plays music
-- Take important note in text file
-- Can take screenshot and save it with custom filename
-- Can tell jokes
+---
 
-## Requirements
+##  Prerequisites
 
-Python 3.6+
+Before installation, ensure you have:
 
-## 📌Installation
+- **Python 3.8+** installed
+- **pip** package manager
+- **Git** for cloning repository
+- **Microphone** for voice input
+- **Speakers/Headphones** for audio output
 
-1. **Fork The Repository**
-   - Click the "Fork" button on the top right corner of the repository page.
+### System Requirements
 
-2. **Clone The Repository**
-   - Clone the forked repository to your local machine:
-     ```bash
-     git clone <URL>
-     cd Jarvis-Desktop-Voice-Assistant
-     ```
+- **OS:** Windows 10/11, Linux (Ubuntu 20.04+), macOS
+- **RAM:** Minimum 4GB
+- **Storage:** 500MB free space
+- **Internet:** Required for web-based features
 
-3.  **Create and Activate a Virtual Environment**
-     - Create a virtual environment:
-     ```bash
-     python -m venv .venv
-     ```
-   - Activate the virtual environment:
-     - For Windows:
-       ```bash
-       .venv\Scripts\activate
-       ```
-     - For macOS/Linux:
-       ```bash
-       source .venv/bin/activate
-       ```
-   - This activates the virtual environment and should look like `(venv) directory/of/your/project>`
+---
 
-4. **Install Requirements**
+##  Installation
 
-   - Install all the requirements given in **[requirements.txt](https://github.com/kishanrajput23/Jarvis-Desktop-Voice-Assistant/blob/main/requirements.txt)** by running the command `pip install -r requirements.txt`
+### Local Setup (Desktop/Laptop)
 
-5. **Install PyAudio**  
-   - Follow the instructions given **[here](https://stackoverflow.com/questions/52283840/i-cant-install-pyaudio-on-windows-how-to-solve-error-microsoft-visual-c-14)**
+1. **Clone the repository:**
+```bash
+   git clone https://github.com/AishwaryaPawar149/Jarvis-Desktop-Voice-Assistant.git
+   cd Jarvis-Desktop-Voice-Assistant
+```
 
-6. **Run the Assistant**
-  - Run the main script:
-    ```bash
-    python jarvis.py
-    ```
-  - Now Enjoy with your own assistant !!!!
+2. **Create virtual environment:**
+```bash
+   python3 -m venv venv
+```
 
-7. **Deactivate the Virtual Environment**
-   - After you're done, deactivate the virtual environment:
-     ```bash
-     deactivate
-     ```
+3. **Activate virtual environment:**
+   
+   **Linux/Mac:**
+```bash
+   source venv/bin/activate
+```
+   
+   **Windows:**
+```bash
+   venv\Scripts\activate
+```
 
-## 📌Contributing
+4. **Install dependencies:**
+```bash
+   pip install --upgrade pip
+   pip install -r requirements.txt
+```
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+5. **Run Jarvis:**
+```bash
+   cd Jarvis
+   python jarvis.py
+```
 
-## 📌Author
+---
 
-👤 **Kishan Kumar Rai**
+##  Deployment
 
-- Twitter: [@kishan_rajput23](https://twitter.com/kishan_rajput23)
-- Github: [@kishanrajput23](https://github.com/kishanrajput23)
-- LinkedIn: [@kishan-kumar-rai](https://linkedin.com/in/kishan-kumar-rai-23112000)
+### Automated Deployment with Jenkins CI/CD
 
-## 📌Show your support
+This project includes automated deployment to AWS EC2 using Jenkins pipeline.
 
-Please ⭐️ this repository if this project helped you!
+#### Prerequisites:
+- Jenkins server configured
+- AWS EC2 instance (Ubuntu)
+- SSH credentials configured in Jenkins
 
-## 📌License
+#### Deployment Steps:
 
-This project is [MIT](https://choosealicense.com/licenses/mit/) licensed.
+1. **Configure Jenkins:**
+   - Create new Pipeline job
+   - Point to this repository
+   - Add SSH credentials with ID: `terraform`
+
+2. **Update Jenkinsfile:**
+```groovy
+   environment {
+       SERVER_IP = "YOUR_EC2_PUBLIC_IP"
+   }
+```
+
+3. **Run Pipeline:**
+   - Jenkins will automatically:
+     - Clone repository
+     - Setup Python environment
+     - Install dependencies
+     - Create systemd service
+     - Deploy application
+
+#### Manual EC2 Deployment:
+```bash
+# SSH to EC2
+ssh ubuntu@YOUR_EC2_IP
+
+# Clone repository
+git clone https://github.com/AishwaryaPawar149/Jarvis-Desktop-Voice-Assistant.git
+cd Jarvis-Desktop-Voice-Assistant
+
+# Setup Python
+sudo apt update
+sudo apt install -y python3 python3-pip python3-venv portaudio19-dev
+
+# Create virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Create systemd service
+sudo nano /etc/systemd/system/jarvis.service
+```
+
+**Service file content:**
+```ini
+[Unit]
+Description=Jarvis Desktop Voice Assistant
+After=network.target sound.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/Jarvis-Desktop-Voice-Assistant
+Environment="PATH=/home/ubuntu/Jarvis-Desktop-Voice-Assistant/venv/bin:/usr/local/bin:/usr/bin:/bin"
+ExecStart=/home/ubuntu/Jarvis-Desktop-Voice-Assistant/venv/bin/python /home/ubuntu/Jarvis-Desktop-Voice-Assistant/Jarvis/jarvis.py
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+```
+
+**Enable and start service:**
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable jarvis.service
+sudo systemctl start jarvis.service
+sudo systemctl status jarvis.service
+```
+
+---
+
+##  Usage
+
+### Starting Jarvis
+
+**Local:**
+```bash
+cd Jarvis
+python jarvis.py
+```
+
+**On Server:**
+```bash
+sudo systemctl start jarvis.service
+```
+
+### Check Service Status
+```bash
+# Status
+sudo systemctl status jarvis.service
+
+# Live logs
+sudo journalctl -u jarvis.service -f
+
+# Recent logs
+sudo journalctl -u jarvis.service -n 50
+```
+
+### Stop Jarvis
+```bash
+sudo systemctl stop jarvis.service
+```
+
+---
+
+##  Voice Commands
+
+### General Commands
+- "Hello Jarvis" - Activate assistant
+- "What's your name?" - Get assistant name
+- "How are you?" - Casual conversation
+- "Thank you" - Gratitude response
+
+### Search & Browse
+- "Search Google for [query]"
+- "Open YouTube"
+- "Search Wikipedia for [topic]"
+- "Open [website name]"
+
+### System Control
+- "What time is it?"
+- "What's the date?"
+- "Open [application name]"
+- "Shutdown system"
+- "Restart system"
+
+### Media
+- "Play [song name]"
+- "Play music"
+- "Stop music"
+
+### Weather
+- "What's the weather?"
+- "Weather in [city]"
+
+---
+
+##  Troubleshooting
+
+### Common Issues
+
+#### 1. **Microphone not detected**
+```bash
+# Check available microphones
+python -c "import speech_recognition as sr; print(sr.Microphone.list_microphone_names())"
+```
+
+#### 2. **Audio output issues**
+```bash
+# Linux - Install audio libraries
+sudo apt install portaudio19-dev python3-pyaudio
+
+# Check audio devices
+aplay -l
+```
+
+#### 3. **Service not starting**
+```bash
+# Check logs for errors
+sudo journalctl -u jarvis.service -n 100
+
+# Check service status
+sudo systemctl status jarvis.service
+
+# Restart service
+sudo systemctl restart jarvis.service
+```
+
+#### 4. **Permission errors**
+```bash
+# Fix file permissions
+sudo chown -R ubuntu:ubuntu /home/ubuntu/Jarvis-Desktop-Voice-Assistant
+chmod +x Jarvis/jarvis.py
+```
+
+#### 5. **Module not found errors**
+```bash
+# Reinstall dependencies
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt --force-reinstall
+```
+
+---
+
+##  Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Open Pull Request
+
+---
+
+
+##  Author
+
+**Aishwarya Pawar**
+
+- GitHub: [@AishwaryaPawar149](https://github.com/AishwaryaPawar149)
+- Repository: [Jarvis-Desktop-Voice-Assistant](https://github.com/AishwaryaPawar149/Jarvis-Desktop-Voice-Assistant)
+
+---
+
+##  Future Enhancements
+
+- [ ] Multi-language support
+- [ ] Custom wake word detection
+- [ ] Integration with smart home devices
+- [ ] Mobile app support
+- [ ] Cloud synchronization
+- [ ] Advanced AI conversations
+
+---
+
+** If you like this project, please give it a star on GitHub!**
